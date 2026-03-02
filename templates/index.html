@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laptop Price Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <h1>Laptop Price Predictor</h1>
+
+    {% if error_text %}
+      <div class="alert alert-error">{{ error_text }}</div>
+    {% endif %}
+
+    <form action="/predict" method="post">
+      <label>Company</label>
+      <select name="company" required>
+        {% for c in companies or [] %}
+          <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Type</label>
+      <select name="type" required>
+        {% for t in types or [] %}
+          <option value="{{ t }}">{{ t }}</option>
+        {% endfor %}
+      </select>
+
+      <label>RAM (GB)</label>
+      <input type="number" name="ram" min="1" step="1" required />
+
+      <label>Weight (kg)</label>
+      <input type="number" name="weight" min="0.5" step="0.1" required />
+
+      <label>Touchscreen</label>
+      <select name="touchscreen" required>
+        <option value="1">Yes</option>
+        <option value="0" selected>No</option>
+      </select>
+
+      <label>IPS</label>
+      <select name="ips" required>
+        <option value="1">Yes</option>
+        <option value="0" selected>No</option>
+      </select>
+
+      <label>CPU Brand</label>
+      <select name="cpu" required>
+        {% for c in cpu or [] %}
+          <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </select>
+
+      <label>GPU Brand</label>
+      <select name="gpu" required>
+        {% for g in gpu or [] %}
+          <option value="{{ g }}">{{ g }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Operating System</label>
+      <select name="os" required>
+        {% for o in os or [] %}
+          <option value="{{ o }}">{{ o }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction_text %}
+      <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
